@@ -5,25 +5,25 @@ arg_t arg = {0, 0};
 
 /**
  * commentCheck - checks if line is a comment.
- * @line - struct containing line content and number.
+ * @line: struct containing line content and number.
  *
  * Return: true if comment otherwise false.
  */
 bool commentCheck(line_t line)
 {
-if (!line.content[0])
-{
-free(line.content);
-return (true);
-}
+	if (!line.content[0])
+	{
+		free(line.content);
+		return (true);
+	}
 
-if (line.content[0][0] == '#')
-{
-free(line.content);
-return (true);
-}
+	if (line.content[0][0] == '#')
+	{
+		free(line.content);
+		return (true);
+	}
 
-return (false);
+	return (false);
 }
 
 /**
@@ -34,22 +34,22 @@ return (false);
  */
 bool argumentCheck(char *token)
 {
-unsigned int i;
+	unsigned int i;
 
-if (!token)
-return (false);
+	if (!token)
+		return (false);
 
-for (i = 0; token[i]; i++)
-{
-if (token[0] == '-')
-continue;
-if (token[i] < '0' || token[i] > '9')
-{
-return (false);
-}
-}
+	for (i = 0; token[i]; i++)
+	{
+		if (token[0] == '-')
+			continue;
+		if (token[i] < '0' || token[i] > '9')
+		{
+			return (false);
+		}
+	}
 
-return (true);
+	return (true);
 }
 
 /**
@@ -63,16 +63,16 @@ return (true);
  */
 void pushCheck(line_t line, meta_t *meta, char *opcode)
 {
-if ((strcmp(opcode, "push") == 0) &&  !argumentCheck(line.content[1]))
-{
-free(line.content);
-fprintf(stderr, "L%d: usage: push integer\n", line.number);
-free(meta->buf);
-freeStack(&(meta->stack));
-fclose(meta->file);
-free(meta);
-exit(EXIT_FAILURE);
-}
-else if (strcmp(opcode, "push") == 0)
-arg.arg = atoi(line.content[1]);
+	if ((strcmp(opcode, "push") == 0) &&  !argumentCheck(line.content[1]))
+	{
+		free(line.content);
+		fprintf(stderr, "L%d: usage: push integer\n", line.number);
+		free(meta->buf);
+		freeStack(&(meta->stack));
+		fclose(meta->file);
+		free(meta);
+		exit(EXIT_FAILURE);
+	}
+	else if (strcmp(opcode, "push") == 0)
+		arg.arg = atoi(line.content[1]);
 }

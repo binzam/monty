@@ -11,24 +11,24 @@
  */
 void parse_line(line_t *line, char *buffer)
 {
-unsigned int i;
-char *token = NULL;
+	unsigned int i;
+	char *token = NULL;
 
-line->content = malloc(sizeof(char *) * 3);
-if (!line->content)
-{
-fprintf(stderr, "Error: malloc failed\n");
-exit(EXIT_FAILURE);
-}
+	line->content = malloc(sizeof(char *) * 3);
+	if (!line->content)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 
-token = strtok(buffer, " '\n'");
-for (i = 0; token && i < 2; i++)
-{
-line->content[i] = token;
-token = strtok(NULL, " \n");
-}
+	token = strtok(buffer, " '\n'");
+	for (i = 0; token && i < 2; i++)
+	{
+		line->content[i] = token;
+		token = strtok(NULL, " \n");
+	}
 
-line->content[i] = NULL;
+	line->content[i] = NULL;
 }
 
 /**
@@ -39,34 +39,34 @@ line->content[i] = NULL;
  */
 void parse_file(FILE *file)
 {
-size_t size = 0;
-meta_t *meta = NULL;
-line_t line;
+	size_t size = 0;
+	meta_t *meta = NULL;
+	line_t line;
 
-meta = malloc(sizeof(meta_t));
-if (!meta)
-{
-fprintf(stderr, "Error: malloc failed\n");
-exit(EXIT_FAILURE);
-}
+	meta = malloc(sizeof(meta_t));
+	if (!meta)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 
-line.number = 0;
-line.content = NULL;
+	line.number = 0;
+	line.content = NULL;
 
-meta->file = file;
-meta->stack = NULL;
-meta->buf = NULL;
+	meta->file = file;
+	meta->stack = NULL;
+	meta->buf = NULL;
 
-while (getline(&(meta->buf), &size, meta->file) != -1)
-{
-line.number++;
-parse_line(&line, meta->buf);
-if (line.content)
-get_op_func(line, meta)(&(meta->stack), line.number);
-}
+	while (getline(&(meta->buf), &size, meta->file) != -1)
+	{
+		line.number++;
+		parse_line(&line, meta->buf);
+		if (line.content)
+			get_op_func(line, meta)(&(meta->stack), line.number);
+	}
 
-free(meta->buf);
-freeStack(&(meta->stack));
-fclose(meta->file);
-free(meta);
+	free(meta->buf);
+	freeStack(&(meta->stack));
+	fclose(meta->file);
+	free(meta);
 }

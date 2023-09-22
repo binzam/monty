@@ -21,8 +21,8 @@
  */
 typedef struct arg_s
 {
-int arg;
-int flag;
+	int arg;
+	int flag;
 } arg_t;
 
 extern arg_t arg;
@@ -38,9 +38,9 @@ extern arg_t arg;
  */
 typedef struct stack_s
 {
-int n;
-struct stack_s *prev;
-struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -52,8 +52,8 @@ struct stack_s *next;
  */
 typedef struct instruction_s
 {
-char *opcode;
-void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /**
@@ -64,13 +64,13 @@ void (*f)(stack_t **stack, unsigned int line_number);
  */
 typedef struct meta_s
 {
-char *buf;
-stack_t *stack;
-FILE *file;
+	char *buf;
+	stack_t *stack;
+	FILE *file;
 } meta_t;
 
 /**
- * struct line - contents of a line and number.
+ * struct line_s - contents of a line and number.
  * @content: array of tokens read from line.
  * @number: line number.
  *
@@ -78,8 +78,8 @@ FILE *file;
  */
 typedef struct line_s
 {
-char **content;
-unsigned int number;
+	char **content;
+	unsigned int number;
 } line_t;
 
 ssize_t getline(char **lineptr, size_t *n, FILE *stream);
